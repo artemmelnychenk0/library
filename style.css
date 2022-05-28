@@ -23,7 +23,8 @@ body {
     margin: 15px 5px 15px 35px;
     font-size: 25px;
     display: grid;
-    padding: 35px;
+    padding: 30px;
+    padding-bottom: 40px;
     box-shadow: 1px 0px 4px black;
 }
 
@@ -98,7 +99,7 @@ form {
 .pages,
 .read {
     text-align: center;
-    word-spacing: 10px;
+    word-spacing: 5px;
     border-bottom: 1px solid grey;
     padding-top: 5px;
 
