@@ -1,14 +1,12 @@
-const title = document.getElementById('title')
-const author = document.getElementById('author')
-const pages = document.getElementById('pages')
-const read = document.getElementById('read')
-
 const card = document.getElementById('card')
 const addBook = document.getElementById('addBook')
 
 const form = document.querySelector('#form')
 let modal = document.getElementById("myModal");
 
+const titleInput = document.querySelector('#title')
+const authorInput = document.querySelector('#author')
+const pagesInput = document.querySelector('#pages')
 
 addBook.addEventListener('click', () => {
     modal.style.display = 'block'
@@ -20,15 +18,40 @@ window.addEventListener('click', (e) => {
     }
 })
 
+titleInput.addEventListener('input', () => {
+    titleInput.setCustomValidity('');
+    titleInput.checkValidity();
+})
+authorInput.addEventListener('input', () => {
+    authorInput.setCustomValidity('');
+    authorInput.checkValidity();
+})
+pagesInput.addEventListener('input', () => {
+    pagesInput.setCustomValidity('');
+    pagesInput.checkValidity();
+})
+
+
+titleInput.addEventListener('invalid', () => {
+    if (titleInput.value === '') {
+        titleInput.setCustomValidity('Enter the title');
+    }
+})
+authorInput.addEventListener('invalid', () => {
+    if (authorInput.value === '') {
+        authorInput.setCustomValidity('Enter the author');
+    }
+})
+pagesInput.addEventListener('invalid', () => {
+    if (pagesInput.value === '') {
+        pagesInput.setCustomValidity('Enter pages');
+    }
+})
 
 let library = []
 
 form.addEventListener('submit', (e) => {
-    let titleForm = title.value;
-    let authorForm = author.value;
-    let pagesForm = pages.value;
-    let readForm = read.value;
-    let newBook = new book(`${titleForm}`, `${authorForm}`, `${pagesForm}`, `${readForm}`)
+    let newBook = new book(`${title.value}`, `${author.value}`, `${pages.value}`, `${read.value}`)
     addBookToLibrary(newBook)
 
     publish();
@@ -38,16 +61,17 @@ form.addEventListener('submit', (e) => {
 })
 
 
-
-function book(title, author, pages, read) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = read
+class book {
+    constructor(title, author, pages, read) {
+        this.title = title
+        this.author = author
+        this.pages = pages
+        this.read = read
+    }
 }
+
 function addBookToLibrary(a) {
     library.push(a)
-
 }
 
 
@@ -56,15 +80,13 @@ let a = 0;
 function publish() {
     for (let i = a; i < library.length; i++) {
         let box = document.createElement('div')
-
         box.classList.add('box')
-
+        // delete button
         let deleteBtn = document.createElement('button')
         deleteBtn.innerHTML = 'Delete'
-
+        // change button
         let changeStatus = document.createElement('button')
         changeStatus.innerHTML = 'Change Read Status'
-
 
         let title = document.createElement('div')
         title.classList.add('title')
@@ -87,9 +109,7 @@ function publish() {
         let read = document.createElement('div')
         read.classList.add('read')
         let readNode = document.createTextNode(`${library[i].read}`)
-
         read.appendChild(readNode)
-
         box.appendChild(read);
 
         changeStatus.addEventListener('click', () => {
